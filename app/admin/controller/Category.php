@@ -142,4 +142,16 @@ class Category extends AdminBase
             return show(config('status.error'), '状态更新失败！');
         }
     }
+    
+    /**
+     * 规格弹窗
+     *
+     * @user LMG
+     * @date 2020/9/4
+     */
+    public function dialog()
+    {
+        
+        return view();
+    }
 }
