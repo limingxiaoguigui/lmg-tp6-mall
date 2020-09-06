@@ -35,7 +35,7 @@ class Category extends AdminBase
             $categories = [];
         }
         
-        return view('', ['categories' => $categories,'pid'=>$pid]);
+        return view('', ['categories' => $categories, 'pid' => $pid]);
     }
     
     /**
@@ -144,7 +144,7 @@ class Category extends AdminBase
     }
     
     /**
-     * 规格弹窗
+     * 分类弹窗
      *
      * @user LMG
      * @date 2020/9/4
@@ -152,6 +152,24 @@ class Category extends AdminBase
     public function dialog()
     {
         
-        return view();
+        //获取正常的以及分类数据
+        $categories = (new CategoryBus()) -> getNormalByPid();
+        
+        return view('', ['categories' => json_encode($categories)]);
+    }
+    
+    /**
+     * 获取分类数据
+     * @return mixed
+     * @user LMG
+     * @date 2020/9/5
+     */
+    public function getByPid()
+    {
+        
+        $pid = input('param.pid', 0, 'intval');
+        $categories = (new CategoryBus()) -> getNormalByPid($pid);
+        
+        return show(config('status.success'), 'ok', $categories);
     }
 }

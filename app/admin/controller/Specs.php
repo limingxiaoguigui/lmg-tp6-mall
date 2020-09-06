@@ -14,11 +14,13 @@ class Specs extends  AdminBase
     
     /**
      * 弹出窗
+     *
      * @user LMG
      * @date 2020/9/4
      */
     public function dialog()
     {
-        return view();
+        
+        return view('', ['specs' => json_encode(config('specs'))]);
     }
 }

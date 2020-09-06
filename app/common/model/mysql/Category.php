@@ -32,7 +32,7 @@ class Category extends Model
      */
     public function getNormalCategories($field)
     {
-    
+        
         $where = [
             "status" => config('status.mysql.table_normal')
         ];
@@ -40,7 +40,7 @@ class Category extends Model
             "listorder" => 'desc',
             "id"        => "desc"
         ];
-    
+        
         return $this -> where($where)
                      -> field($field)
                      -> order($order)
@@ -69,6 +69,7 @@ class Category extends Model
     
     /**
      * 通过id更新数据
+     *
      * @param $id
      * @param $data
      * @return bool
@@ -86,6 +87,7 @@ class Category extends Model
     
     /**
      * 获取子栏目个数
+     *
      * @param $condition
      * @return mixed
      * @user LMG
@@ -93,13 +95,41 @@ class Category extends Model
      */
     public function getChildCountInPids($condition)
     {
-    
+        
         $where[] = ['pid', 'in', $condition[ 'pid' ]];
         $where[] = ['status', '<>', config('status.mysql.table_delete')];
         $res = $this -> where($where)
                      -> field(["pid", "count(*) as count"])
                      -> group('pid')
                      -> select();
+        
+        return $res;
+    }
+    
+    /**
+     * 通过父分类获取子分类
+     *
+     * @param  int  $pid
+     * @param $field
+     * @user LMG
+     * @date 2020/9/5
+     */
+    public function getNormalByPid($pid = 0, $field)
+    {
+        
+        $where = [
+            'pid'    => $pid,
+            'status' => config('status.mysql.table_normal')
+        ];
+        $order = [
+            'listorder' => 'desc',
+            'id'        => 'desc'
+        ];
+        $res = $this -> where($where)
+                     -> field($field)
+                     -> order($order)
+                     -> select();
+        
         return $res;
     }
 }
