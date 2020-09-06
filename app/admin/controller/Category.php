@@ -32,7 +32,7 @@ class Category extends AdminBase
         try {
             $categories = (new CategoryBus()) -> getList($data, 5);
         } catch (\Exception $e) {
-            $categories = [];
+                $result =\app\common\lib\Arr::getPaginateDefaultData(5);
         }
         
         return view('', ['categories' => $categories, 'pid' => $pid]);

@@ -64,4 +64,25 @@ class Arr
         }
         return $data;
     }
+    
+    /**
+     * 获取分类默认数据
+     *
+     * @param $num
+     * @user LMG
+     * @date 2020/9/6
+     */
+    public static function getPaginateDefaultData($num)
+    {
+        
+        $result = [
+            'total'        => 0,
+            'per_page'     => $num,
+            'current_page' => 1,
+            'last_page'    => 0,
+            'data'         => [],
+        ];
+        
+        return $result;
+    }
 }
