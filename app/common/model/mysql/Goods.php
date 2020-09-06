@@ -64,7 +64,43 @@ class Goods extends BaseModel
         $list = $res -> whereIn('status', [0, 1])
                      -> order($order)
                      -> paginate($num);
+        
         return $list;
-       
+    }
+    
+    /**
+     * 获取大图推荐
+     *
+     * @user LMG
+     * @date 2020/9/7
+     */
+    public function getNormalGoodsByCondition($where, $field, $limit = 5)
+    {
+        
+        $order = [
+            "listorder" => 'desc',
+            "id"        => "desc"
+        ];
+        $where[ 'status' ] = config('status.success');
+        $result = $this -> where($where)
+                        -> order($order)
+                        -> field($field)
+                        -> limit($limit)
+                        -> select();
+        
+        return $result;
+    }
+    
+    /**
+     * 获取图片
+     * @param $value
+     * @return string
+     * @user LMG
+     * @date 2020/9/7
+     */
+    public function getImageAttr($value)
+    {
+        
+        return request() -> domain().$value;
     }
 }

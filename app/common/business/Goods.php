@@ -97,15 +97,39 @@ class Goods extends BusBase
      */
     public function getLists($data, $num = 5)
     {
-        $likeKeys =[];
-        if(!empty($data)){
-            $likeKeys=array_keys($data);
+        
+        $likeKeys = [];
+        if ( ! empty($data)) {
+            $likeKeys = array_keys($data);
         }
         try {
-            $list = $this -> model -> getLists($likeKeys,$data, $num);
+            $list = $this -> model -> getLists($likeKeys, $data, $num);
             $result = $list -> toArray();
         } catch (\Exception $e) {
-           $result =\app\common\lib\Arr::getPaginateDefaultData($num);
+            $result = \app\common\lib\Arr ::getPaginateDefaultData($num);
+        }
+        
+        return $result;
+    }
+    
+    /**
+     * 获取大图推荐
+     *
+     * @user LMG
+     * @date 2020/9/7
+     */
+    public function getRotationChart()
+    {
+        
+        $data = [
+            'is_index_recommend' => 1
+        ];
+        $field = 'sku_id as id,title,big_image as image';
+        try {
+            $result = $this -> model -> getNormalGoodsByCondition($data, $field);
+            $result = $result -> toArray();
+        } catch (\Exception $e) {
+            return [];
         }
         
         return $result;
