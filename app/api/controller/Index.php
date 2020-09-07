@@ -29,4 +29,22 @@ class Index extends ApiBase
         
         return Show ::success($result);
     }
+    
+    /**
+     * 获取分类推荐商品
+     * @return mixed
+     * @user LMG
+     * @date 2020/9/8
+     */
+    public function categoryGoodsRecommend()
+    {
+        
+        $categoryIds = [
+            4,
+            6
+        ];
+        $result = (new GoodsBus()) -> categoryGoodsRecommend($categoryIds);
+        
+        return Show ::success($result);
+    }
 }

@@ -93,6 +93,7 @@ class Goods extends BaseModel
     
     /**
      * 获取图片
+     *
      * @param $value
      * @return string
      * @user LMG
@@ -102,5 +103,29 @@ class Goods extends BaseModel
     {
         
         return request() -> domain().$value;
+    }
+    
+    /**
+     * 获取某分类下的商品
+     *
+     * @param $categoryId
+     * @user LMG
+     * @date 2020/9/8
+     */
+    public function getNormalGoodsFindInSetCategoryId($categoryId, $field)
+    {
+        
+        $order = [
+            "listorder" => 'desc',
+            "id"        => "desc"
+        ];
+        $result = $this -> whereFindInSet('category_path_id', $categoryId)
+                        -> where('status', '=', config('status.success'))
+                        -> order($order)
+                        -> field($field)
+                        -> limit(10)
+                        -> select();
+        
+        return $result;
     }
 }

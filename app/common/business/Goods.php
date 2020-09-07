@@ -134,4 +134,47 @@ class Goods extends BusBase
         
         return $result;
     }
+    
+    /**
+     * 获取分类推荐商品
+     *
+     * @return mixed
+     * @user LMG
+     * @date 2020/9/8
+     */
+    public function categoryGoodsRecommend($categoryIds)
+    {
+        if(!$categoryIds){
+            return [];
+        }
+        // todo 获取栏目
+        $result =[];
+        foreach ($categoryIds as $key =>$categoryId){
+            $result[$key]['categorys']=[];
+        }
+        foreach ($categoryIds as $key =>$categoryId){
+            $result[$key]['goods']=$this->getNormalGoodsFindInSetCategoryId($categoryId);
+        }
+        return $result;
+    }
+    
+    /**
+     * 获取某分类下的商品
+     * @param $categoryId
+     * @user LMG
+     * @date 2020/9/8
+     */
+    public function getNormalGoodsFindInSetCategoryId($categoryId)
+    {
+        
+        $field = "sku_id as id ,title,price,recommend_image as image";
+        try {
+            $result = $this -> model -> getNormalGoodsFindInSetCategoryId($categoryId, $field);
+            $result=$result->toArray();
+        } catch (\Exception $e) {
+            $result = [];
+        }
+        
+        return $result;
+    }
 }
