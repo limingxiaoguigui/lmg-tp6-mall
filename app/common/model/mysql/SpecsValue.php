@@ -45,4 +45,19 @@ class SpecsValue extends Model
         return $res;
     }
     
+    /**
+     * 获取规格属性值
+     * @param $ids
+     * @return \think\Collection
+     * @user LMG
+     * @date 2020/9/9
+     */
+    public function getNormalInIds($ids)
+    {
+        
+        return $this -> whereIn('id', $ids)
+                     -> where('status', '=', config('status.mysql.table_normal'))
+                     -> select();
+    }
+    
 }
